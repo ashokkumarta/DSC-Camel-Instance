@@ -1,0 +1,18 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route id="dsc-to-file-example">
+
+        <from uri="timer://foo?delay=10000&amp;period=15000"/>
+
+        <log message="Started file-demo route"/>
+
+        <setHeader name="CamelHttpMethod"><constant>POST</constant></setHeader>
+        <setHeader name="Authorization"><constant>Basic YWRtaW46cGFzc3dvcmQ=</constant></setHeader>
+        <to uri="https://dataspace-connector:8080/admin/api/resources/3bc8731a-0d82-4899-a3a6-88ab10f31223/data?httpClientConfigurer=#selfSignedHttpClientConfigurer"/>
+        <convertBodyTo type="java.lang.String"/>
+
+        <log message="Fetched data: ${body}"/>
+
+        <to uri="file:/output?fileName=resourcedata.txt"/>
+
+    </route>
+</routes>

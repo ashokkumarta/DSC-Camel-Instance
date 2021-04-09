@@ -1,0 +1,18 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route id="postgres-to-dsc-example">
+
+        <from uri="sql:select * from country?initialDelay=10000&amp;delay=15000&amp;useIterator=false&amp;dataSource=#testDataSource"/>
+        <convertBodyTo type="java.lang.String"/>
+
+        <log message="Started postgres-demo route"/>
+
+        <log message="Fetched data: ${body}"/>
+
+        <setHeader name="CamelHttpMethod"><constant>PUT</constant></setHeader>
+
+        <setHeader name="Authorization"><constant>Basic YWRtaW46cGFzc3dvcmQ=</constant></setHeader>
+
+        <to uri="https://dataspace-connector:8080/admin/api/resources/3bc8731a-0d82-4899-a3a6-88ab10f31223/data?httpClientConfigurer=#selfSignedHttpClientConfigurer"/>
+
+    </route>
+</routes>
