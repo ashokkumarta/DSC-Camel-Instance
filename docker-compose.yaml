@@ -1,0 +1,14 @@
+version: '3'
+services:
+  dataspace-connector:
+    container_name: dataspace-connector
+    image: docker.pkg.github.com/international-data-spaces-association/dataspaceconnector/dataspace-connector:4.1.0
+    ports:
+      - "8080:8080"
+
+  camel:
+    container_name: camel
+    build:
+      context: .
+    ports:
+      - "9090:9090"

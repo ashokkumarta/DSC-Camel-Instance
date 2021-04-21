@@ -5,12 +5,9 @@ COPY src /tmp/src/
 
 WORKDIR tmp
 
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests -Dmaven.javadoc.skip=true
 
 FROM adoptopenjdk/openjdk11:alpine-jre
-
-RUN mkdir -p /camel/routes
-RUN mkdir /output
 
 RUN mkdir /app
 
