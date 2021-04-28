@@ -6,6 +6,8 @@ import javax.xml.bind.Unmarshaller;
 
 import lombok.NoArgsConstructor;
 import org.apache.camel.model.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
@@ -61,6 +63,17 @@ public class ApplicationConfig {
     public BeanDefinitionRegistry beanDefinitionRegistry(final GenericApplicationContext
                                                                      appContext) {
         return (BeanDefinitionRegistry) appContext.getAutowireCapableBeanFactory();
+    }
+
+    /**
+     * Creates the Camel route Logger as a bean so that it can be used in routes (for printing
+     * messages set in <log/> tag).
+     *
+     * @return the Logger for Camel routes
+     */
+    @Bean("route-logger")
+    public Logger getCamelRouteLogger() {
+        return LoggerFactory.getLogger("camel-route-logger");
     }
 
 }

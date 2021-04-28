@@ -31,5 +31,8 @@
         <Logger name="de.fraunhofer.isst.dataspaceconnector.camel" level="info">
             <AppenderRef ref="ConsoleAppender"/>
         </Logger>
+        <Logger name="camel-route-logger" level="info">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Logger>
     </Loggers>
 </Configuration>
