@@ -138,8 +138,11 @@ contain any number of endpoints a message should be sent to (*&lt;to uri="..."&g
 For endpoints, any Camel component can be used (e.g. *http*, *sql*). Each component used in the routes has to be added
 to this application's POM as a dependency. For this, the component's Springboot starter can be used. Hereinafter,
 example routes are given for using different Camel components as data sources/sinks with the Dataspace Connector. All
-Camel components used in the examples have already been added to the POM. The routes described here can also be found 
-under `src/main/resources/routes`.
+Camel components used in the examples have already been added to the POM. 
+
+**The routes described here use version 5 of the Dataspace Connector. They can also be found under 
+`src/main/resources/routes/dsc-v5`. The same routes for version 4 of the Dataspace Connector can be found under 
+`src/main/resources/routes/dsc-v4`.**
 
 ### Provider
 
@@ -168,12 +171,12 @@ used as the start of a route. A simple workaround is to use a timer as the route
         <setHeader name="Authorization">
             <constant>Basic YWRtaW46cGFzc3dvcmQ=</constant>
         </setHeader>
-        <to uri="http://dataspace-connector:8080/admin/api/resources/3bc8731a-0d82-4899-a3a6-88ab10f31223/data"/>
+        <to uri="http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
 
     </route>
 
 This route will start every 15 seconds (with an initial delay of 10 seconds), make an HTTP GET call to the backend and
-send the response to the connector as the data of the resource with ID *3bc8731a-0d82-4899-a3a6-88ab10f31223*.
+send the response to the connector as the data of the artifact with ID *927906f2-5ee1-4678-9ace-5f1f2368606c*.
 
 #### SQL
 
@@ -205,13 +208,13 @@ in the URI of the *from* tag:
         <setHeader name="Authorization">
             <constant>Basic YWRtaW46cGFzc3dvcmQ=</constant>
         </setHeader>
-        <to uri="http://dataspace-connector:8080/admin/api/resources/3bc8731a-0d82-4899-a3a6-88ab10f31223/data"/>
+        <to uri="http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
 
     </route>
 
 This route will start every 15 seconds (with an initial delay of 10 seconds), fetch data from the database using the
-specified query and send that to the connector as the data of the resource with ID
-*3bc8731a-0d82-4899-a3a6-88ab10f31223*.
+specified query and send that to the connector as the data of the artifact with ID 
+*927906f2-5ee1-4678-9ace-5f1f2368606c*.
 
 Note that the data source bean's ID is referenced as the value for the query parameter *dataSource* in the *from* tag.
 This allows you to specify the correct data source if multiple data source beans are defined. There is also a query
@@ -238,13 +241,13 @@ given in the URI of the *from* tag. Therefore, only the route has to added:
         <setHeader name="Authorization">
             <constant>Basic YWRtaW46cGFzc3dvcmQ=</constant>
         </setHeader>
-        <to uri="http://dataspace-connector:8080/admin/api/resources/3bc8731a-0d82-4899-a3a6-88ab10f31223/data"/>
+        <to uri="http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
 
     </route>
 
 This route will be triggered whenever a new message is published to the topic with name *test-topic* at the MQTT broker
-located at *tcp://mosquitto:1883* and send that message's payload to the connector as the data of the resource with ID
-*3bc8731a-0d82-4899-a3a6-88ab10f31223*.
+located at *tcp://mosquitto:1883* and send that message's payload to the connector as the data of the artifact with ID 
+*927906f2-5ee1-4678-9ace-5f1f2368606c*.
 
 ### Consumer
 
@@ -261,12 +264,12 @@ is used as the route start.
         <from uri="timer://foo?delay=10000&amp;period=15000"/>
 
         <setHeader name="CamelHttpMethod">
-            <constant>POST</constant>
+            <constant>GET</constant>
         </setHeader>
         <setHeader name="Authorization">
             <constant>Basic YWRtaW46cGFzc3dvcmQ=</constant>
         </setHeader>
-        <to uri="http://dataspace-connector:8080/admin/api/resources/3bc8731a-0d82-4899-a3a6-88ab10f31223/data"/>
+        <to uri="http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
         
         <convertBodyTo type="java.lang.String"/>
 
@@ -275,7 +278,7 @@ is used as the route start.
     </route>
 
 This route will start every 15 seconds (with an initial delay of 10 seconds), fetch the data of the connector's
-resource with ID *3bc8731a-0d82-4899-a3a6-88ab10f31223* and write it to a file located at */output/resourcedata.txt*.
+artifact with ID *927906f2-5ee1-4678-9ace-5f1f2368606c* and write it to a file located at */output/resourcedata.txt*.
 
 ## Using the Dataspace Connector with SSL enabled
 
@@ -324,12 +327,12 @@ Based on this, a route that includes a data app looks as follows:
 
         <setHeader name="TargetDataUri">
             <constant>
-                http://dataspace-connector:8080/admin/api/resources/3bc8731a-0d82-4899-a3a6-88ab10f31223
+                http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c
             </constant>
         </setHeader>
         <setHeader name="ContractId">
             <constant>
-                https://w3id.org/idsa/autogen/contractOffer/591467af-9633-4a4e-8bcf-47ba4e6679ea
+                http://dataspace-connector:8080/api/agreements/533012aa-25d4-49fe-a3e1-56aa37777b52
             </constant>
         </setHeader>
         <setHeader name="AppName">
@@ -350,7 +353,7 @@ Based on this, a route that includes a data app looks as follows:
         <setHeader name="Authorization">
             <constant>Basic YWRtaW46cGFzc3dvcmQ=</constant>
         </setHeader>
-        <to uri="http://dataspace-connector:8080/admin/api/resources/3bc8731a-0d82-4899-a3a6-88ab10f31223/data"/>
+        <to uri="http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
 
     </route>
 
