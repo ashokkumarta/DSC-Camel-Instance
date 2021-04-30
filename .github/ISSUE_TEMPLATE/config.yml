@@ -1,0 +1,6 @@
+---
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question or get support
+    url: https://github.com/International-Data-Spaces-Association/DSC-Camel-Instance/discussions/
+    about: Ask a question or request support for using the DataspaceConnector Camel Instance

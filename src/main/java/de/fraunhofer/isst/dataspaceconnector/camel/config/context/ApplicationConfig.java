@@ -67,7 +67,7 @@ public class ApplicationConfig {
 
     /**
      * Creates the Camel route Logger as a bean so that it can be used in routes (for printing
-     * messages set in <log/> tag).
+     * messages set in log tag).
      *
      * @return the Logger for Camel routes
      */
