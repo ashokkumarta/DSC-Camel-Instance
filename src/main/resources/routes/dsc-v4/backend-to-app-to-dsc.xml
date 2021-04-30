@@ -1,0 +1,37 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route id="backend-to-app-to-dsc-example">
+
+        <from uri="timer://foo?delay=10000&amp;period=20000"/>
+
+        <log message="Started app-demo route"/>
+
+        <!-- Get data from backend -->
+        <setHeader name="CamelHttpMethod"><constant>GET</constant></setHeader>
+        <to uri="http://http-demo-backend:8090/demo"/>
+        <convertBodyTo type="java.lang.String"/>
+
+        <log message="Fetched data: ${body}"/>
+
+        <!-- Set UC headers and call /input of app -->
+        <setHeader name="CamelHttpMethod"><constant>GET</constant></setHeader>
+        <setHeader name="TargetDataUri">
+            <constant>
+                http://dataspace-connector:8080/admin/api/resources/3bc8731a-0d82-4899-a3a6-88ab10f31223
+            </constant>
+        </setHeader>
+        <setHeader name="ContractId">
+            <constant>
+                https://w3id.org/idsa/autogen/contractAgreement/8e74334d-d218-416b-81e4-1721cfed4687
+            </constant>
+        </setHeader>
+        <setHeader name="AppName"><constant>UC-Header Test App</constant></setHeader>
+        <setHeader name="AppUri"><constant>http://demo-app:5000</constant></setHeader>
+        <to uri="http://demo-app:5000?socketTimeout=10000"/>
+
+        <!-- Send data from /output to DSC's /resource/data endpoint -->
+        <setHeader name="CamelHttpMethod"><constant>PUT</constant></setHeader>
+        <setHeader name="Authorization"><constant>Basic YWRtaW46cGFzc3dvcmQ=</constant></setHeader>
+        <to uri="http://dataspace-connector:8080/admin/api/resources/3bc8731a-0d82-4899-a3a6-88ab10f31223/data"/>
+
+    </route>
+</routes>
