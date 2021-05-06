@@ -1,4 +1,4 @@
-# Dataspace-Connector-Camel-Instance
+# Dataspace Connector Camel Instance
 
 This Camel application is intended for use with the 
 [Dataspace Connector](https://github.com/International-Data-Spaces-Association/DataspaceConnector) and the 

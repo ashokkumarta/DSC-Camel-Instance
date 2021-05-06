@@ -1,20 +1,16 @@
-FROM maven:3-openjdk-11 AS maven
+# Dependencies
+FROM maven:3-jdk-11 AS maven
+WORKDIR /app
+COPY pom.xml .
+RUN mvn -e -B dependency:resolve
 
-COPY pom.xml /tmp/
-COPY src /tmp/src/
-
-WORKDIR tmp
-
-RUN mvn clean package -DskipTests -Dmaven.javadoc.skip=true
+# Classes
+COPY src/main/java ./src/main/java
+COPY src/main/resources ./src/main/resources
+RUN mvn -e -B clean package -DskipTests -Dmaven.javadoc.skip=true
 
 FROM adoptopenjdk/openjdk11:alpine-jre
-
-RUN mkdir /app
-
-COPY --from=maven /tmp/target/*.jar /app/app.jar
-
-WORKDIR /app/
-
+COPY --from=maven /app/target/*.jar /app/app.jar
+WORKDIR /app
 EXPOSE 9090
-
 ENTRYPOINT ["java","-jar","app.jar"]
