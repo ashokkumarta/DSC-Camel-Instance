@@ -6,8 +6,6 @@ on:
     tags: 'v*'
    release:
      types: [published]
-   schedule:
-      - cron: '0 4 * * *'
       
 env:
   REGISTRY: ${{ secrets.IMAGE_REGISTRY }}
@@ -24,7 +22,7 @@ jobs:
       -
         name: Build registry path
         id: get_repo
-        run: echo ::set-output name=IMAGE::"$REGISTRY/$OWNER/dsc-camel-instance/dsc-camel-instance"
+        run: echo ::set-output name=IMAGE::"$REGISTRY/$OWNER/dsc-camel-instance"
       -
        name: Find tag
        id: get_tag
