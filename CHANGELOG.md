@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.1] 
+
+### Changed
+
+- Change Camel Spring Boot version to 3.10.0.
+- Change Spring Boot version to 2.5.0.
+
 ## [1.0.0] - 2021-04-30
 
 ### Added
