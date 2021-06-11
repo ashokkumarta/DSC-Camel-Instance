@@ -171,7 +171,7 @@ used as the start of a route. A simple workaround is to use a timer as the route
         <setHeader name="Authorization">
             <constant>Basic YWRtaW46cGFzc3dvcmQ=</constant>
         </setHeader>
-        <to uri="http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
+        <to uri="https://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
 
     </route>
 
@@ -208,7 +208,7 @@ in the URI of the *from* tag:
         <setHeader name="Authorization">
             <constant>Basic YWRtaW46cGFzc3dvcmQ=</constant>
         </setHeader>
-        <to uri="http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
+        <to uri="https://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
 
     </route>
 
@@ -241,7 +241,7 @@ given in the URI of the *from* tag. Therefore, only the route has to added:
         <setHeader name="Authorization">
             <constant>Basic YWRtaW46cGFzc3dvcmQ=</constant>
         </setHeader>
-        <to uri="http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
+        <to uri="https://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
 
     </route>
 
@@ -269,7 +269,7 @@ is used as the route start.
         <setHeader name="Authorization">
             <constant>Basic YWRtaW46cGFzc3dvcmQ=</constant>
         </setHeader>
-        <to uri="http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
+        <to uri="https://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
         
         <convertBodyTo type="java.lang.String"/>
 
@@ -280,19 +280,19 @@ is used as the route start.
 This route will start every 15 seconds (with an initial delay of 10 seconds), fetch the data of the connector's
 artifact with ID *927906f2-5ee1-4678-9ace-5f1f2368606c* and write it to a file located at */output/resourcedata.txt*.
 
-## Using the Dataspace Connector with SSL enabled
+## SSL with Camel HTTP component
 
-In all given example routes the Dataspace Connector is addressed using HTTP, not HTTPS. This is due to the fact that
-in test environments self-signed certificates are often used. These lead to an error when Camel tries to call the
-connector. 
+Per default, the Camel HTTP component can not work with self-signed certificates. It has been configured to use the
+same truststore as the Dataspace Connector and thus can communicate with the Dataspace Connector using HTTPS 
+out-of-the-box. 
 
-To be able to use the connector with SSL enabled also when using self-signed certificates, an implementation of the 
+For calling any other HTTP services or backends using self-signed certificates in Camel routes, an implementation of the
 *org.apache.camel.component.http.HttpClientConfigurer* that works with self-signed certificates has been added to this
 project (`src/main/java/de/fraunhofer/isst/dataspaceconnector/camel/util/SelfSignedHttpClientConfigurer`). **Note that
-this disables the hostname verification and thus is not secure!** To use this HttpClientConfigurer in routes, declare 
-it as a bean and add it as a query parameter at the end of the connector URI:
+this disables the hostname verification and thus is not secure!** To use this HttpClientConfigurer in routes, declare
+it as a bean and add it as a query parameter at the end of the HTTP URL:
 
-	uri="https://dataspace-connector:8080/...?httpClientConfigurer=#idOfHttpClientConfigurerBean"/>
+	uri="https://backend-with-self-signed-cert:8080/...?httpClientConfigurer=#idOfHttpClientConfigurerBean"/>
 
 **In productive environments SSL should always be enabled and real certificates should be used!**
 
@@ -327,12 +327,12 @@ Based on this, a route that includes a data app looks as follows:
 
         <setHeader name="TargetDataUri">
             <constant>
-                http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c
+                https://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c
             </constant>
         </setHeader>
         <setHeader name="ContractId">
             <constant>
-                http://dataspace-connector:8080/api/agreements/533012aa-25d4-49fe-a3e1-56aa37777b52
+                https://dataspace-connector:8080/api/agreements/533012aa-25d4-49fe-a3e1-56aa37777b52
             </constant>
         </setHeader>
         <setHeader name="AppName">
@@ -353,7 +353,7 @@ Based on this, a route that includes a data app looks as follows:
         <setHeader name="Authorization">
             <constant>Basic YWRtaW46cGFzc3dvcmQ=</constant>
         </setHeader>
-        <to uri="http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
+        <to uri="https://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
 
     </route>
 
