@@ -46,7 +46,7 @@
 
         <!-- Dependencies -->
         <camel-springboot.version>3.10.0</camel-springboot.version>
-        <postgres.version>42.2.20</postgres.version>
+        <postgres.version>42.2.21</postgres.version>
         <tidy.version>1.1.0</tidy.version>
         <objenesis.version>3.2</objenesis.version>
 
