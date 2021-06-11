@@ -10,7 +10,7 @@
 
         <setHeader name="CamelHttpMethod"><constant>PUT</constant></setHeader>
         <setHeader name="Authorization"><constant>Basic YWRtaW46cGFzc3dvcmQ=</constant></setHeader>
-        <to uri="http://dataspace-connector:8080/admin/api/resources/3bc8731a-0d82-4899-a3a6-88ab10f31223/data"/>
+        <to uri="https://dataspace-connector:8080/admin/api/resources/3bc8731a-0d82-4899-a3a6-88ab10f31223/data"/>
 
     </route>
 </routes>

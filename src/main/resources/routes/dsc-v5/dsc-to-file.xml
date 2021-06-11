@@ -7,7 +7,7 @@
 
         <setHeader name="CamelHttpMethod"><constant>GET</constant></setHeader>
         <setHeader name="Authorization"><constant>Basic YWRtaW46cGFzc3dvcmQ=</constant></setHeader>
-        <to uri="http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
+        <to uri="https://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
         <convertBodyTo type="java.lang.String"/>
 
         <log message="Fetched data: ${body}"/>

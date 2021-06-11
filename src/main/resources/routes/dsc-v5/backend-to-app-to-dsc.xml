@@ -16,12 +16,12 @@
         <setHeader name="CamelHttpMethod"><constant>GET</constant></setHeader>
         <setHeader name="TargetDataUri">
             <constant>
-                http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c
+                https://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c
             </constant>
         </setHeader>
         <setHeader name="ContractId">
             <constant>
-                http://dataspace-connector:8080/api/agreements/533012aa-25d4-49fe-a3e1-56aa37777b52
+                https://dataspace-connector:8080/api/agreements/533012aa-25d4-49fe-a3e1-56aa37777b52
             </constant>
         </setHeader>
         <setHeader name="AppName"><constant>UC-Header Test App</constant></setHeader>
@@ -31,7 +31,7 @@
         <!-- Send data from /output to DSC's /resource/data endpoint -->
         <setHeader name="CamelHttpMethod"><constant>PUT</constant></setHeader>
         <setHeader name="Authorization"><constant>Basic YWRtaW46cGFzc3dvcmQ=</constant></setHeader>
-        <to uri="http://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
+        <to uri="https://dataspace-connector:8080/api/artifacts/927906f2-5ee1-4678-9ace-5f1f2368606c/data"/>
 
     </route>
 </routes>
